@@ -8,15 +8,15 @@ plot4<- function(){
 	#strptime("10/1/2007 17:24:00","%d/%m/%Y %H:%M:%S")
 	filtermydata <- mydata[mydata$Date == fromdate  | mydata$Date == todate,]
 	filtermydata$datetime =  strptime(paste(filtermydata$Date, " " , filtermydata$Time), "%Y-%m-%d %H:%M:%S")
-	filtermydata$Global_active_power = as.numeric(filtermydata$Global_active_power)/1000
+	filtermydata$Global_active_power = as.numeric(as.character(filtermydata$Global_active_power))
 	filtermydata$Sub_metering_1 <-as.numeric(as.character(filtermydata$Sub_metering_1))
 	filtermydata$Sub_metering_2 <-as.numeric(as.character(filtermydata$Sub_metering_2))
 	filtermydata$Sub_metering_3 <-as.numeric(as.character(filtermydata$Sub_metering_3))
 	png(file = "plot4.png")
 	par(mfrow=c(2,2))
 	#par(pin=c(10,10))	
-	plot(filtermydata$datetime, filtermydata$Global_active_power*2,type="l",xlab="",ylab="Global Active Power")
-	plot(filtermydata$datetime, as.numeric(as.character(filtermydata$Voltage)),type="l",xlab="",ylab="Voltage")
+	plot(filtermydata$datetime, filtermydata$Global_active_power,type="l",xlab="",ylab="Global Active Power")
+	plot(filtermydata$datetime, as.numeric(as.character(filtermydata$Voltage)),type="l",xlab="datetime",ylab="Voltage")
 	
 	plot(filtermydata$datetime, as.numeric(filtermydata$Sub_metering_1),type="l" ,col="black",
 	 xlab="" , ylab="Energy sub metering")
@@ -25,7 +25,7 @@ plot4<- function(){
 	legend("topright",c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"), 
 	lty=c(1,1,1),lwd=c(2.5,2.5,2.5),col=c("black","red","blue"))
 	
-	plot(filtermydata$datetime, as.numeric(as.character(filtermydata$Global_reactive_power)),type="l",xlab="",ylab="Global_reactive_power")
+	plot(filtermydata$datetime, as.numeric(as.character(filtermydata$Global_reactive_power)),type="l",xlab="datetime",ylab="Global_reactive_power")
 	
 	#dev.copy(png, file = "plot4.png") 
 	dev.off()

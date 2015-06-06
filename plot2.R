@@ -6,8 +6,8 @@ plot2<- function(){
 	#strptime("10/1/2007 17:24:00","%d/%m/%Y %H:%M:%S")
 	filtermydata <- mydata[mydata$Date == fromdate  | mydata$Date == todate,]
 	filtermydata$datetime =  strptime(paste(filtermydata$Date, " " , filtermydata$Time), "%Y-%m-%d %H:%M:%S")
-	filtermydata$Global_active_power = as.numeric(filtermydata$Global_active_power)/1000
-	 plot(filtermydata$datetime, filtermydata$Global_active_power*2,type="l",xlab="",ylab="Global Active Power(kilowatts)")
+	filtermydata$Global_active_power = as.numeric(as.character(filtermydata$Global_active_power))
+	 plot(filtermydata$datetime, filtermydata$Global_active_power,type="l",xlab="",ylab="Global Active Power(kilowatts)")
 	 dev.copy(png, file = "plot2.png") 
 	 dev.off()
 		
