@@ -3,7 +3,6 @@ plot3<- function(){
 	mydata$Date <- as.Date( mydata$Date,  , format="%d/%m/%Y") 
 	fromdate <- as.Date("2007-02-01")
 	todate <- as.Date("2007-02-02")
-	#strptime("10/1/2007 17:24:00","%d/%m/%Y %H:%M:%S")
 	filtermydata <- mydata[mydata$Date == fromdate  | mydata$Date == todate,]
 	filtermydata$datetime =  strptime(paste(filtermydata$Date, " " , filtermydata$Time), "%Y-%m-%d %H:%M:%S")
     filtermydata$Sub_metering_1 <-as.numeric(as.character(filtermydata$Sub_metering_1))
