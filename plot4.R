@@ -1,14 +1,10 @@
+library(sqldf)
 # This R program plots mulitple graphs to provide summarised information about the various meaures
 # in the dataset
 plot4<- function(){
 	# Read the data
-	mydata = read.csv("household_power_consumption.txt", , header = TRUE, sep = ";")
-	# Filter the records
-	mydata$Date <- as.Date( mydata$Date,  , format="%d/%m/%Y") 
-	fromdate <- as.Date("2007-02-01")
-	todate <- as.Date("2007-02-02")
-	#strptime("10/1/2007 17:24:00","%d/%m/%Y %H:%M:%S")
-	filtermydata <- mydata[mydata$Date == fromdate  | mydata$Date == todate,]
+	filtermydata <- read.csv.sql('household_power_consumption.txt', sql = "select * from file where Date in ('1/2/2007', '2/2/2007')", sep =";" ,   header = T,   stringsAsFactors = F)
+	filtermydata$Date <- as.Date( filtermydata$Date,  , format="%d/%m/%Y") 
 	filtermydata$datetime =  strptime(paste(filtermydata$Date, " " , filtermydata$Time), "%Y-%m-%d %H:%M:%S")
 	filtermydata$Global_active_power = as.numeric(as.character(filtermydata$Global_active_power))
 	filtermydata$Sub_metering_1 <-as.numeric(as.character(filtermydata$Sub_metering_1))
@@ -29,6 +25,6 @@ plot4<- function(){
 	lty=c(1,1,1),lwd=c(2.5,2.5,2.5),col=c("black","red","blue"))
 	plot(filtermydata$datetime, as.numeric(as.character(filtermydata$Global_reactive_power)),type="l",xlab="datetime",ylab="Global_reactive_power")
 	dev.off()
-		
+	closeAllConnections()	
 }
 
